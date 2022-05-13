@@ -12,11 +12,11 @@ func SetRoute(e *echo.Echo) {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 	e.GET("/emoloyee:id", func(c echo.Context) error {
-		controller := NewEmployeeController(usecases.NewEmployeeUsecase(repositories.NewEmoloyeeRepository()))
+		controller := NewEmployeeController(usecases.NewEmployeeUsecase(repositories.NewEmployeeRepository()))
 		return controller.Get(c)
 	})
 	e.POST("/emoloyee", func(c echo.Context) error {
-		controller := NewEmployeeController(usecases.NewEmployeeUsecase(repositories.NewEmoloyeeRepository()))
+		controller := NewEmployeeController(usecases.NewEmployeeUsecase(repositories.NewEmployeeRepository()))
 		return controller.Create(c)
 	})
 }

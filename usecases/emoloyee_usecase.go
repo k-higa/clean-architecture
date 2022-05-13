@@ -20,7 +20,7 @@ func NewEmployeeUsecase(employeeRepo entities.EmployeeRepository) EmployeeUseCas
 }
 
 func (e EmployeeInteractor) FindEmployee(d input_port.Emoployee) (*output_port.Emoployee, error) {
-	employee, err := e.employeeRepo.FindEmoloyeeOnly(d.ID)
+	employee, err := e.employeeRepo.FindEmployeeOnly(d.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func (e EmployeeInteractor) FindEmployee(d input_port.Emoployee) (*output_port.E
 }
 
 func (e EmployeeInteractor) CreatedEmployee(d input_port.Emoployee) (*output_port.Emoployee, error) {
-	emoloyee := entities.Emoloyee{
+	emoloyee := entities.Employee{
 		Name: d.Name,
 		Age:  d.Age,
 	}

@@ -6,37 +6,37 @@ import (
 	"database/sql"
 )
 
-type EmoloyeeRepository struct {
+type EmployeeRepository struct {
 }
 
-func NewEmoloyeeRepository() entities.EmployeeRepository {
-	return &EmoloyeeRepository{}
+func NewEmployeeRepository() entities.EmployeeRepository {
+	return &EmployeeRepository{}
 }
 
-func (e EmoloyeeRepository) FindEmoloyeeOnly(id int) (*entities.Emoloyee, error) {
-	var emoloyee = database.Emoloyee{}
-	res := database.DB.Model(database.Emoloyee{}).Where("id = ?", id).Find(&emoloyee)
+func (e EmployeeRepository) FindEmployeeOnly(id int) (*entities.Employee, error) {
+	var employee = database.Emoloyee{}
+	res := database.DB.Model(database.Emoloyee{}).Where("id = ?", id).Find(&employee)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	return &entities.Emoloyee{
-		ID:   emoloyee.ID,
-		Name: emoloyee.Name.String,
-		Age:  int(emoloyee.Age.Int32),
+	return &entities.Employee{
+		ID:   employee.ID,
+		Name: employee.Name.String,
+		Age:  int(employee.Age.Int32),
 	}, nil
 }
 
-func (e EmoloyeeRepository) Create(emoloyee entities.Emoloyee) (*entities.Emoloyee, error) {
+func (e EmployeeRepository) Create(employee entities.Employee) (*entities.Employee, error) {
 	model := &database.Emoloyee{
-		ID:   emoloyee.ID,
-		Name: sql.NullString{String: emoloyee.Name, Valid: true},
-		Age:  sql.NullInt32{Int32: int32(emoloyee.Age), Valid: true},
+		ID:   employee.ID,
+		Name: sql.NullString{String: employee.Name, Valid: true},
+		Age:  sql.NullInt32{Int32: int32(employee.Age), Valid: true},
 	}
 	res := database.DB.Create(model)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	return &entities.Emoloyee{
+	return &entities.Employee{
 		ID:   model.ID,
 		Name: model.Name.String,
 		Age:  int(model.Age.Int32),

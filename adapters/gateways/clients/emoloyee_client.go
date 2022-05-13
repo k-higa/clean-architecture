@@ -1,16 +1,16 @@
 package repositories
 
-type EmoloyeeClient interface {
+type EmployeeClient interface {
 	Fetch(req EmployeeReq) (*EmployeeRes, error)
 }
-type emoloyeeClient struct {
+type employeeClient struct {
 }
 
-func NewEmoloyeeClient() EmoloyeeClient {
-	return &emoloyeeClient{}
+func NewEmployeeClient() EmployeeClient {
+	return &employeeClient{}
 }
 
-func (e *emoloyeeClient) Fetch(req EmployeeReq) (*EmployeeRes, error) {
+func (e *employeeClient) Fetch(req EmployeeReq) (*EmployeeRes, error) {
 	return nil, nil
 }
 

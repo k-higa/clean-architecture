@@ -16,7 +16,7 @@ func TestOK(t *testing.T) {
 
 	// モックの生成
 	mockRepo := mock.NewMockEmployeeRepository(ctrl)
-	out := &entities.Emoloyee{
+	out := &entities.Employee{
 		ID:   1,
 		Name: "Sam",
 		Age:  29,

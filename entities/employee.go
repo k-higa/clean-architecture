@@ -3,13 +3,13 @@ package entities
 /**
 ドメインエンティティ
 */
-type Emoloyee struct {
+type Employee struct {
 	ID   int
 	Name string
 	Age  int
 }
 
 type EmployeeRepository interface {
-	FindEmoloyeeOnly(id int) (*Emoloyee, error)
-	Create(e Emoloyee) (*Emoloyee, error)
+	FindEmployeeOnly(id int) (*Employee, error)
+	Create(e Employee) (*Employee, error)
 }
