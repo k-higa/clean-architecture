@@ -1,4 +1,4 @@
-package gateways
+package repositories
 
 import (
 	"clean-architecture/database"
