@@ -1,7 +1,7 @@
 package mock
 
 import (
-	"clean-architecture/domains"
+	"clean-architecture/entities"
 	"clean-architecture/usecases"
 	"clean-architecture/usecases/input_port"
 	"clean-architecture/usecases/test/mock"
@@ -16,7 +16,7 @@ func TestOK(t *testing.T) {
 
 	// モックの生成
 	mockRepo := mock.NewMockEmployeeRepository(ctrl)
-	out := &domains.Emoloyee{
+	out := &entities.Emoloyee{
 		ID:   1,
 		Name: "Sam",
 		Age:  29,
