@@ -23,9 +23,5 @@ func (e *EmployeeController) Handle(c echo.Context) error {
 		c.Logger().Error(err)
 		return c.JSON(http.StatusInternalServerError, "internal servaer error ")
 	}
-	return c.JSON(http.StatusInternalServerError, result)
-}
-
-func createUser(c echo.Context) error {
-	return nil
+	return c.JSON(http.StatusOK, result)
 }

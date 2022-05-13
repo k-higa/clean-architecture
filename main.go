@@ -2,7 +2,7 @@ package main
 
 import (
 	"clean-architecture/adapters/controllers"
-	gateways2 "clean-architecture/adapters/gateways"
+	"clean-architecture/adapters/gateways"
 	"clean-architecture/database"
 	"clean-architecture/usecases"
 	"github.com/labstack/echo/v4"
@@ -28,7 +28,7 @@ func router(e *echo.Echo) {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 	e.GET("/emoloyee:id", func(c echo.Context) error {
-		controller := controllers.NewEmployeeController(usecases.NewEmployeeUsecase(gateways2.NewEmoloyeeRepository()))
+		controller := controllers.NewEmployeeController(usecases.NewEmployeeUsecase(gateways.NewEmoloyeeRepository()))
 		return controller.Handle(c)
 	})
 }
