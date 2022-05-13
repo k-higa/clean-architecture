@@ -48,3 +48,18 @@ func (mr *MockEmployeeUseCaseMockRecorder) FindEmployee(d interface{}) *gomock.C
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindEmployee", reflect.TypeOf((*MockEmployeeUseCase)(nil).FindEmployee), d)
 }
+
+// CreatedEmployee mocks base method
+func (m *MockEmployeeUseCase) CreatedEmployee(d input_port.Emoployee) (*output_port.Emoployee, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatedEmployee", d)
+	ret0, _ := ret[0].(*output_port.Emoployee)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreatedEmployee indicates an expected call of CreatedEmployee
+func (mr *MockEmployeeUseCaseMockRecorder) CreatedEmployee(d interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatedEmployee", reflect.TypeOf((*MockEmployeeUseCase)(nil).CreatedEmployee), d)
+}

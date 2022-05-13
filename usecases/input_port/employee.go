@@ -1,5 +1,7 @@
 package input_port
 
 type Emoployee struct {
-	ID int
+	ID   int
+	Name string
+	Age  int
 }

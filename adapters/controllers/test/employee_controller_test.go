@@ -41,7 +41,7 @@ func TestOK(t *testing.T) {
 	mockUsecase.EXPECT().FindEmployee(gomock.Any()).Return(out, nil)
 	controller := controllers.NewEmployeeController(mockUsecase)
 	// Assertions
-	if assert.NoError(t, controller.Handle(c)) {
+	if assert.NoError(t, controller.Get(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		//assert.Equal(t, resJson, rec.Body.String())
 	}

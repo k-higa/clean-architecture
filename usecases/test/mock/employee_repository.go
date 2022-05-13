@@ -49,9 +49,9 @@ func (mr *MockEmployeeRepositoryMockRecorder) FindEmoloyeeOnly(id interface{}) *
 }
 
 // Save mocks base method
-func (m *MockEmployeeRepository) Save(e domains.Emoloyee) (*domains.Emoloyee, error) {
+func (m *MockEmployeeRepository) Create(e domains.Emoloyee) (*domains.Emoloyee, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Save", e)
+	ret := m.ctrl.Call(m, "Create", e)
 	ret0, _ := ret[0].(*domains.Emoloyee)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
@@ -60,5 +60,5 @@ func (m *MockEmployeeRepository) Save(e domains.Emoloyee) (*domains.Emoloyee, er
 // Save indicates an expected call of Save
 func (mr *MockEmployeeRepositoryMockRecorder) Save(e interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockEmployeeRepository)(nil).Save), e)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockEmployeeRepository)(nil).Create), e)
 }

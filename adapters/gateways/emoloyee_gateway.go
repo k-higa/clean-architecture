@@ -26,13 +26,13 @@ func (e EmoloyeeGateway) FindEmoloyeeOnly(id int) (*domains.Emoloyee, error) {
 	}, nil
 }
 
-func (e EmoloyeeGateway) Save(emoloyee domains.Emoloyee) (*domains.Emoloyee, error) {
+func (e EmoloyeeGateway) Create(emoloyee domains.Emoloyee) (*domains.Emoloyee, error) {
 	model := &database.Emoloyee{
 		ID:   emoloyee.ID,
 		Name: sql.NullString{String: emoloyee.Name, Valid: true},
 		Age:  sql.NullInt32{Int32: int32(emoloyee.Age), Valid: true},
 	}
-	res := database.DB.Save(model)
+	res := database.DB.Create(model)
 	if res.Error != nil {
 		return nil, res.Error
 	}

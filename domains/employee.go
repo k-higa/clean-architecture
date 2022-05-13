@@ -11,5 +11,5 @@ type Emoloyee struct {
 
 type EmployeeRepository interface {
 	FindEmoloyeeOnly(id int) (*Emoloyee, error)
-	Save(e Emoloyee) (*Emoloyee, error)
+	Create(e Emoloyee) (*Emoloyee, error)
 }

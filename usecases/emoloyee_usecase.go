@@ -8,6 +8,7 @@ import (
 
 type EmployeeUseCase interface {
 	FindEmployee(d input_port.Emoployee) (*output_port.Emoployee, error)
+	CreatedEmployee(d input_port.Emoployee) (*output_port.Emoployee, error)
 }
 
 type EmployeeInteractor struct {
@@ -20,6 +21,23 @@ func NewEmployeeUsecase(employeeRepo domains.EmployeeRepository) EmployeeUseCase
 
 func (e EmployeeInteractor) FindEmployee(d input_port.Emoployee) (*output_port.Emoployee, error) {
 	employee, err := e.employeeRepo.FindEmoloyeeOnly(d.ID)
+	if err != nil {
+		return nil, err
+	}
+	out := &output_port.Emoployee{
+		ID:   employee.ID,
+		Name: employee.Name,
+		Age:  employee.Age,
+	}
+	return out, nil
+}
+
+func (e EmployeeInteractor) CreatedEmployee(d input_port.Emoployee) (*output_port.Emoployee, error) {
+	emoloyee := domains.Emoloyee{
+		Name: d.Name,
+		Age:  d.Age,
+	}
+	employee, err := e.employeeRepo.Create(emoloyee)
 	if err != nil {
 		return nil, err
 	}
