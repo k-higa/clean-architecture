@@ -23,7 +23,9 @@ type AmazonPayRes struct {
 	ID     int
 	Amount int
 	Status string
-
+	Log
+}
+type Log struct {
 	Host        string
 	ContentType string
 	RequestLog  string
