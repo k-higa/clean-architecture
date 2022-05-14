@@ -34,7 +34,7 @@ func (m *MockEmployeeRepository) EXPECT() *MockEmployeeRepositoryMockRecorder {
 }
 
 // FindEmoloyeeOnly mocks base method
-func (m *MockEmployeeRepository) FindEmployee(id int) (*domains.Employee, error) {
+func (m *MockEmployeeRepository) FindEmployee(ctx interface{}, e, id int) (*domains.Employee, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindEmployee", id)
 	ret0, _ := ret[0].(*domains.Employee)
@@ -42,14 +42,8 @@ func (m *MockEmployeeRepository) FindEmployee(id int) (*domains.Employee, error)
 	return ret0, ret1
 }
 
-// FindEmoloyeeOnly indicates an expected call of FindEmoloyeeOnly
-func (mr *MockEmployeeRepositoryMockRecorder) FindEmoloyeeOnly(id interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindEmployee", reflect.TypeOf((*MockEmployeeRepository)(nil).FindEmployee), id)
-}
-
 // Save mocks base method
-func (m *MockEmployeeRepository) Create(e domains.Employee) (*domains.Employee, error) {
+func (m *MockEmployeeRepository) Create(ctx interface{}, e domains.Employee) (*domains.Employee, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", e)
 	ret0, _ := ret[0].(*domains.Employee)

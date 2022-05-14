@@ -8,8 +8,3 @@ type Employee struct {
 	Name string
 	Age  int
 }
-
-type EmployeeRepository interface {
-	FindEmployee(id int) (*Employee, error)
-	Create(e Employee) (*Employee, error)
-}

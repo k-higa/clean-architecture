@@ -4,6 +4,8 @@ import (
 	"clean-architecture/domains"
 	"clean-architecture/usecases/input_port"
 	"clean-architecture/usecases/output_port"
+	"clean-architecture/usecases/repository"
+	"golang.org/x/net/context"
 )
 
 type EmployeeUseCase interface {
@@ -12,15 +14,18 @@ type EmployeeUseCase interface {
 }
 
 type EmployeeInteractor struct {
-	employeeRepo domains.EmployeeRepository
+	employeeRepo repository.EmployeeRepository
+	tm           repository.TransactionManager
 }
 
-func NewEmployeeUseCase(employeeRepo domains.EmployeeRepository) EmployeeUseCase {
-	return &EmployeeInteractor{employeeRepo: employeeRepo}
+func NewEmployeeUseCase(
+	employeeRepo repository.EmployeeRepository,
+	tm repository.TransactionManager) EmployeeUseCase {
+	return &EmployeeInteractor{employeeRepo: employeeRepo, tm: tm}
 }
 
 func (e EmployeeInteractor) FindEmployee(d input_port.Emoployee) (*output_port.Emoployee, error) {
-	employee, err := e.employeeRepo.FindEmployee(d.ID)
+	employee, err := e.employeeRepo.FindEmployee(context.TODO(), d.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -37,14 +42,22 @@ func (e EmployeeInteractor) CreatedEmployee(d input_port.Emoployee) (*output_por
 		Name: d.Name,
 		Age:  d.Age,
 	}
-	employee, err := e.employeeRepo.Create(emoloyee)
+	var out output_port.Emoployee
+	err := e.tm.Transact(func(ctx context.Context) error {
+		//transaction
+		res, err := e.employeeRepo.Create(ctx, emoloyee)
+		if err != nil {
+			return err
+		}
+		res, err = e.employeeRepo.Create(ctx, emoloyee)
+		if err != nil {
+			return err
+		}
+		out.ID = res.ID
+		return nil
+	})
 	if err != nil {
 		return nil, err
 	}
-	out := &output_port.Emoployee{
-		ID:   employee.ID,
-		Name: employee.Name,
-		Age:  employee.Age,
-	}
-	return out, nil
+	return &out, nil
 }

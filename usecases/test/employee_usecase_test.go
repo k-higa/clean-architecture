@@ -1,10 +1,11 @@
 package mock
 
 import (
-	"clean-architecture/domains"
+	"clean-architecture/adapters/gateways/repository"
+	"clean-architecture/usecases/test/mock"
+
 	"clean-architecture/usecases"
 	"clean-architecture/usecases/input_port"
-	"clean-architecture/usecases/test/mock"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -14,15 +15,7 @@ func TestOK(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	// モックの生成
-	mockRepo := mock.NewMockEmployeeRepository(ctrl)
-	out := &domains.Employee{
-		ID:   1,
-		Name: "Sam",
-		Age:  29,
-	}
-	mockRepo.EXPECT().FindEmoloyeeOnly(gomock.Any()).Return(out, nil)
-	usecase := usecases.NewEmployeeUseCase(mockRepo)
+	usecase := usecases.NewEmployeeUseCase(mock.MockRepository{}, repository.NewTransactionManger(nil))
 	input := input_port.Emoployee{ID: 1}
 	employee, err := usecase.FindEmployee(input)
 

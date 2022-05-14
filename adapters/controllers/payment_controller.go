@@ -15,7 +15,7 @@ func NewPaymentController(uc usecases.PaymentTransactionUseCase) *PaymentControl
 	return &PaymentController{uc: uc}
 }
 
-func (p *PaymentController) Create(c echo.Context) error {
+func (p *PaymentController) Entry(c echo.Context) error {
 	body := &input_port.PaymentEntry{}
 	if err := c.Bind(body); err != nil {
 		return c.String(http.StatusBadRequest, "bad request")

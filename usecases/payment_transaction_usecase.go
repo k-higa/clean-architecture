@@ -1,9 +1,9 @@
 package usecases
 
 import (
-	"clean-architecture/domains"
 	"clean-architecture/usecases/input_port"
 	"clean-architecture/usecases/output_port"
+	"clean-architecture/usecases/repository"
 )
 
 type PaymentTransactionUseCase interface {
@@ -11,22 +11,25 @@ type PaymentTransactionUseCase interface {
 }
 
 type paymentTransactionInteractor struct {
-	paymentTransactionRepo domains.PaymentTransactionRepository
+	paymentTransactionRepo repository.PaymentTransactionRepository
+	tm                     repository.TransactionManager
 }
 
-func NewPaymentTransactionUseCase(paymentTransactionRepo domains.PaymentTransactionRepository) PaymentTransactionUseCase {
-	return &paymentTransactionInteractor{paymentTransactionRepo: paymentTransactionRepo}
+func NewPaymentTransactionUseCase(
+	paymentTransactionRepo repository.PaymentTransactionRepository,
+	tm repository.TransactionManager) PaymentTransactionUseCase {
+	return &paymentTransactionInteractor{paymentTransactionRepo: paymentTransactionRepo, tm: tm}
 }
 
 func (p paymentTransactionInteractor) Entry(d input_port.PaymentEntry) (*output_port.PaymentTransaction, error) {
-	transaction, err := p.paymentTransactionRepo.Create(d.Amount)
+	res, err := p.paymentTransactionRepo.Create(p.tm.Tx(), d.Amount)
 	if err != nil {
 		return nil, err
 	}
 	out := &output_port.PaymentTransaction{
-		ID:     transaction.ID,
-		Amount: transaction.Amount,
-		Status: transaction.Status,
+		ID:     res.ID,
+		Amount: res.Amount,
+		Status: res.Status,
 	}
 	return out, nil
 }

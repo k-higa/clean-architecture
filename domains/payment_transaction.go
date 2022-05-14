@@ -5,9 +5,3 @@ type PaymentTransaction struct {
 	Amount int
 	Status string
 }
-
-type PaymentTransactionRepository interface {
-	Create(amount int) (*PaymentTransaction, error)
-	Capture(id int) (*PaymentTransaction, error)
-	Cahnge(transaction PaymentTransaction) (*PaymentTransaction, error)
-}
