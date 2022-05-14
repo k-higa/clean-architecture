@@ -1,4 +1,4 @@
-package usecases
+package repository
 
 import (
 	"clean-architecture/adapters/gateways/clients"
