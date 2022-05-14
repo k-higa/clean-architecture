@@ -12,17 +12,26 @@ type PaymentTransactionUseCase interface {
 
 type paymentTransactionInteractor struct {
 	paymentTransactionRepo repository.PaymentTransactionRepository
+	paymentLogReoisitory   repository.PaymentLogReoisitory
 	tm                     repository.TransactionManager
 }
 
 func NewPaymentTransactionUseCase(
 	paymentTransactionRepo repository.PaymentTransactionRepository,
+	paymentLogReoisitory repository.PaymentLogReoisitory,
 	tm repository.TransactionManager) PaymentTransactionUseCase {
-	return &paymentTransactionInteractor{paymentTransactionRepo: paymentTransactionRepo, tm: tm}
+	return &paymentTransactionInteractor{
+		paymentTransactionRepo: paymentTransactionRepo,
+		paymentLogReoisitory:   paymentLogReoisitory,
+		tm:                     tm}
 }
 
 func (p paymentTransactionInteractor) Entry(d input_port.PaymentEntry) (*output_port.PaymentTransaction, error) {
-	res, err := p.paymentTransactionRepo.Entry(p.tm.Tx(), d.Amount)
+	res, log, err := p.paymentTransactionRepo.Entry(p.tm.Tx(), d.Amount)
+	if err != nil {
+		return nil, err
+	}
+	err = p.paymentLogReoisitory.Create(p.tm.Tx(), *log)
 	if err != nil {
 		return nil, err
 	}

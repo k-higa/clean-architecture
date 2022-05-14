@@ -26,8 +26,9 @@ func SetRoute(e *echo.Echo) {
 	})
 
 	e.POST("/payment/entry", func(c echo.Context) error {
-		repo := repository.NewPaymentTransactionRepository(stores.NewAPIKeyGateway(), clients.NewAmazonPayClient())
-		useCase := usecases.NewPaymentTransactionUseCase(repo, stores.NewTransactionManger(external_interfaces.DB))
+		ptRepo := repository.NewPaymentTransactionRepository(stores.NewPaymentTransactionGateway(), stores.NewAPIKeyGateway(), clients.NewAmazonPayClient())
+		logRepo := repository.NewPaymentLogReoisitory(stores.NewPaymentLogGateway())
+		useCase := usecases.NewPaymentTransactionUseCase(ptRepo, logRepo, stores.NewTransactionManger(external_interfaces.DB))
 		controller := NewPaymentController(useCase)
 		return controller.Entry(c)
 	})
