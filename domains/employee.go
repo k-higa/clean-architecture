@@ -1,7 +1,7 @@
-package entities
+package domains
 
 /**
-ドメインエンティティ
+Domain entiry
 */
 type Employee struct {
 	ID   int
@@ -10,6 +10,6 @@ type Employee struct {
 }
 
 type EmployeeRepository interface {
-	FindEmployeeOnly(id int) (*Employee, error)
+	FindEmployee(id int) (*Employee, error)
 	Create(e Employee) (*Employee, error)
 }

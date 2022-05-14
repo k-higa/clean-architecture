@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	"clean-architecture/entities"
+	"clean-architecture/domains"
 	"clean-architecture/usecases/input_port"
 	"clean-architecture/usecases/output_port"
 )
@@ -12,15 +12,15 @@ type EmployeeUseCase interface {
 }
 
 type EmployeeInteractor struct {
-	employeeRepo entities.EmployeeRepository
+	employeeRepo domains.EmployeeRepository
 }
 
-func NewEmployeeUsecase(employeeRepo entities.EmployeeRepository) EmployeeUseCase {
+func NewEmployeeUseCase(employeeRepo domains.EmployeeRepository) EmployeeUseCase {
 	return &EmployeeInteractor{employeeRepo: employeeRepo}
 }
 
 func (e EmployeeInteractor) FindEmployee(d input_port.Emoployee) (*output_port.Emoployee, error) {
-	employee, err := e.employeeRepo.FindEmployeeOnly(d.ID)
+	employee, err := e.employeeRepo.FindEmployee(d.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func (e EmployeeInteractor) FindEmployee(d input_port.Emoployee) (*output_port.E
 }
 
 func (e EmployeeInteractor) CreatedEmployee(d input_port.Emoployee) (*output_port.Emoployee, error) {
-	emoloyee := entities.Employee{
+	emoloyee := domains.Employee{
 		Name: d.Name,
 		Age:  d.Age,
 	}

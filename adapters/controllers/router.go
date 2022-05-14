@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"clean-architecture/adapters/gateways/repositories"
+	"clean-architecture/adapters/gateways/rdb"
 	"clean-architecture/usecases"
 	"github.com/labstack/echo/v4"
 	"net/http"
@@ -12,11 +12,11 @@ func SetRoute(e *echo.Echo) {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 	e.GET("/emoloyee:id", func(c echo.Context) error {
-		controller := NewEmployeeController(usecases.NewEmployeeUsecase(repositories.NewEmployeeRepository()))
+		controller := NewEmployeeController(usecases.NewEmployeeUseCase(usecases.NewEmployeeRepository(rdb.NewEmployeeGateway())))
 		return controller.Get(c)
 	})
 	e.POST("/emoloyee", func(c echo.Context) error {
-		controller := NewEmployeeController(usecases.NewEmployeeUsecase(repositories.NewEmployeeRepository()))
+		controller := NewEmployeeController(usecases.NewEmployeeUseCase(usecases.NewEmployeeRepository(rdb.NewEmployeeGateway())))
 		return controller.Create(c)
 	})
 }

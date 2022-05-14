@@ -1,7 +1,7 @@
 package mock
 
 import (
-	"clean-architecture/entities"
+	"clean-architecture/domains"
 	"clean-architecture/usecases"
 	"clean-architecture/usecases/input_port"
 	"clean-architecture/usecases/test/mock"
@@ -16,13 +16,13 @@ func TestOK(t *testing.T) {
 
 	// モックの生成
 	mockRepo := mock.NewMockEmployeeRepository(ctrl)
-	out := &entities.Employee{
+	out := &domains.Employee{
 		ID:   1,
 		Name: "Sam",
 		Age:  29,
 	}
 	mockRepo.EXPECT().FindEmoloyeeOnly(gomock.Any()).Return(out, nil)
-	usecase := usecases.NewEmployeeUsecase(mockRepo)
+	usecase := usecases.NewEmployeeUseCase(mockRepo)
 	input := input_port.Emoployee{ID: 1}
 	employee, err := usecase.FindEmployee(input)
 

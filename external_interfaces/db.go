@@ -1,4 +1,4 @@
-package database
+package external_interfaces
 
 import "gorm.io/gorm"
 

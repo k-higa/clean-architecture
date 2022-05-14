@@ -1,8 +1,8 @@
-package database
+package external_interfaces
 
 import "database/sql"
 
-type Emoloyee struct {
+type Employee struct {
 	ID   int `gorm:"primaryKey"`
 	Name sql.NullString
 	Age  sql.NullInt32
