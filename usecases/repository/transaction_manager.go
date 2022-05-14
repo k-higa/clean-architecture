@@ -1,11 +1,13 @@
 package repository
 
-import "golang.org/x/net/context"
+import (
+	"clean-architecture/usecases"
+)
 
 type TransactionManager interface {
-	Begin(ctx context.Context) interface{}
-	Commit(ctx context.Context) error
-	Rollback(ctx context.Context) (interface{}, error)
-	Transact(f func(ctx context.Context) error) error
-	Tx() context.Context
+	Begin(ctx usecases.Context) interface{}
+	Commit(ctx usecases.Context) error
+	Rollback(ctx usecases.Context) (interface{}, error)
+	Transact(f func(ctx usecases.Context) error) error
+	Tx() usecases.Context
 }

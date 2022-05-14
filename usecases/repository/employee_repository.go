@@ -3,12 +3,12 @@ package repository
 import (
 	"clean-architecture/adapters/gateways/stores"
 	"clean-architecture/domains"
-	"golang.org/x/net/context"
+	"clean-architecture/usecases"
 )
 
 type EmployeeRepository interface {
-	FindEmployee(ctx context.Context, id int) (*domains.Employee, error)
-	Create(ctx context.Context, e domains.Employee) (*domains.Employee, error)
+	FindEmployee(ctx usecases.Context, id int) (*domains.Employee, error)
+	Create(ctx usecases.Context, e domains.Employee) (*domains.Employee, error)
 }
 
 type employeeRepository struct {
@@ -19,7 +19,7 @@ func NewEmployeeRepository(employeeGateway stores.EmployeeGateway) EmployeeRepos
 	return &employeeRepository{employeeGateway: employeeGateway}
 }
 
-func (e employeeRepository) FindEmployee(ctx context.Context, id int) (*domains.Employee, error) {
+func (e employeeRepository) FindEmployee(ctx usecases.Context, id int) (*domains.Employee, error) {
 	employee, err := e.employeeGateway.FindEmployeeByID(ctx, id)
 	if err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func (e employeeRepository) FindEmployee(ctx context.Context, id int) (*domains.
 	return employee, nil
 }
 
-func (e employeeRepository) Create(ctx context.Context, employee domains.Employee) (*domains.Employee, error) {
+func (e employeeRepository) Create(ctx usecases.Context, employee domains.Employee) (*domains.Employee, error) {
 	result, err := e.employeeGateway.Create(ctx, employee)
 	if err != nil {
 		return nil, err

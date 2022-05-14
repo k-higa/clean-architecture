@@ -4,12 +4,12 @@ import (
 	"clean-architecture/adapters/gateways/stores"
 	ei "clean-architecture/adapters/gateways/stores/models"
 	"clean-architecture/othter"
+	"clean-architecture/usecases"
 	"database/sql"
-	"golang.org/x/net/context"
 )
 
 type PaymentLogReoisitory interface {
-	Create(ctx context.Context, pl othter.PaymentLog) error
+	Create(ctx usecases.Context, pl othter.PaymentLog) error
 }
 
 type PaymentLog struct {
@@ -23,7 +23,7 @@ func NewPaymentLogReoisitory(paymentLogGateway stores.PaymentLogGateway) *paymen
 	return &paymentLogReoisitory{paymentLogGateway: paymentLogGateway}
 }
 
-func (p paymentLogReoisitory) Create(ctx context.Context, pi othter.PaymentLog) error {
+func (p paymentLogReoisitory) Create(ctx usecases.Context, pi othter.PaymentLog) error {
 	log := ei.PaymentLog{
 		Host:        sql.NullString{String: pi.Host, Valid: true},
 		ContentType: sql.NullString{String: pi.Host, Valid: true},

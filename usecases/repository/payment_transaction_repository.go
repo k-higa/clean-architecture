@@ -7,13 +7,13 @@ import (
 	ei "clean-architecture/adapters/gateways/stores/models"
 	"clean-architecture/domains"
 	"clean-architecture/othter"
-	"golang.org/x/net/context"
+	"clean-architecture/usecases"
 )
 
 type PaymentTransactionRepository interface {
-	Entry(ctx context.Context, amount int) (*domains.PaymentTransaction, *othter.PaymentLog, error)
-	Capture(ctx context.Context, id int) (*domains.PaymentTransaction, *othter.PaymentLog, error)
-	Cahnge(ctx context.Context, transaction domains.PaymentTransaction) (*domains.PaymentTransaction, *othter.PaymentLog, error)
+	Entry(ctx usecases.Context, amount int) (*domains.PaymentTransaction, *othter.PaymentLog, error)
+	Capture(ctx usecases.Context, id int) (*domains.PaymentTransaction, *othter.PaymentLog, error)
+	Cahnge(ctx usecases.Context, transaction domains.PaymentTransaction) (*domains.PaymentTransaction, *othter.PaymentLog, error)
 }
 
 type paymentTransactionRepository struct {
@@ -32,7 +32,7 @@ func NewPaymentTransactionRepository(
 		amazonPayAPIGateway:       amazonPayClient}
 }
 
-func (p paymentTransactionRepository) Entry(ctx context.Context, amount int) (*domains.PaymentTransaction, *othter.PaymentLog, error) {
+func (p paymentTransactionRepository) Entry(ctx usecases.Context, amount int) (*domains.PaymentTransaction, *othter.PaymentLog, error) {
 	apiKey, err := p.apiKeyGateway.FindByID(ctx, 1)
 	if err != nil {
 		return nil, nil, err
@@ -64,12 +64,12 @@ func (p paymentTransactionRepository) Entry(ctx context.Context, amount int) (*d
 	}, log, nil
 }
 
-func (p paymentTransactionRepository) Capture(ctx context.Context, id int) (*domains.PaymentTransaction, *othter.PaymentLog, error) {
+func (p paymentTransactionRepository) Capture(ctx usecases.Context, id int) (*domains.PaymentTransaction, *othter.PaymentLog, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (p paymentTransactionRepository) Cahnge(ctx context.Context, transaction domains.PaymentTransaction) (*domains.PaymentTransaction, *othter.PaymentLog, error) {
+func (p paymentTransactionRepository) Cahnge(ctx usecases.Context, transaction domains.PaymentTransaction) (*domains.PaymentTransaction, *othter.PaymentLog, error) {
 	//TODO implement me
 	panic("implement me")
 }

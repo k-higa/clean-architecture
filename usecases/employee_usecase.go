@@ -43,7 +43,7 @@ func (e EmployeeInteractor) CreatedEmployee(d input_port.Emoployee) (*output_por
 		Age:  d.Age,
 	}
 	var out output_port.Emoployee
-	err := e.tm.Transact(func(ctx context.Context) error {
+	err := e.tm.Transact(func(ctx Context) error {
 		//transaction
 		res, err := e.employeeRepo.Create(ctx, emoloyee)
 		if err != nil {
