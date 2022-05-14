@@ -45,7 +45,7 @@ func (m *MockEmployeeRepository) FindEmployee(ctx interface{}, e, id int) (*doma
 // Save mocks base method
 func (m *MockEmployeeRepository) Create(ctx interface{}, e domains.Employee) (*domains.Employee, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", e)
+	ret := m.ctrl.Call(m, "Entry", e)
 	ret0, _ := ret[0].(*domains.Employee)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
@@ -54,5 +54,5 @@ func (m *MockEmployeeRepository) Create(ctx interface{}, e domains.Employee) (*d
 // Save indicates an expected call of Save
 func (mr *MockEmployeeRepositoryMockRecorder) Save(e interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockEmployeeRepository)(nil).Create), e)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Entry", reflect.TypeOf((*MockEmployeeRepository)(nil).Create), e)
 }

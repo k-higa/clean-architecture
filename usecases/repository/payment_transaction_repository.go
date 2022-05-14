@@ -8,7 +8,7 @@ import (
 )
 
 type PaymentTransactionRepository interface {
-	Create(ctx context.Context, amount int) (*domains.PaymentTransaction, error)
+	Entry(ctx context.Context, amount int) (*domains.PaymentTransaction, error)
 	Capture(ctx context.Context, id int) (*domains.PaymentTransaction, error)
 	Cahnge(ctx context.Context, transaction domains.PaymentTransaction) (*domains.PaymentTransaction, error)
 }
@@ -24,7 +24,7 @@ func NewPaymentTransactionRepository(
 	return &paymentTransactionRepository{apiKeyGateway: apiKeyGateway, amazonPayClient: amazonPayClient}
 }
 
-func (p paymentTransactionRepository) Create(ctx context.Context, amount int) (*domains.PaymentTransaction, error) {
+func (p paymentTransactionRepository) Entry(ctx context.Context, amount int) (*domains.PaymentTransaction, error) {
 	apiKey, err := p.apiKeyGateway.FindByID(ctx, 1)
 	if err != nil {
 		return nil, err

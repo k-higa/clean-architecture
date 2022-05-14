@@ -22,7 +22,7 @@ func NewPaymentTransactionUseCase(
 }
 
 func (p paymentTransactionInteractor) Entry(d input_port.PaymentEntry) (*output_port.PaymentTransaction, error) {
-	res, err := p.paymentTransactionRepo.Create(p.tm.Tx(), d.Amount)
+	res, err := p.paymentTransactionRepo.Entry(p.tm.Tx(), d.Amount)
 	if err != nil {
 		return nil, err
 	}
