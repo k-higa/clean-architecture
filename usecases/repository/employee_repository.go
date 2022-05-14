@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"clean-architecture/adapters/gateways/clients"
 	"clean-architecture/adapters/gateways/stores"
 	"clean-architecture/domains"
 	"golang.org/x/net/context"
@@ -13,8 +12,7 @@ type EmployeeRepository interface {
 }
 
 type employeeRepository struct {
-	employeeGateway   stores.EmployeeGateway
-	employeeAPIClient clients.EmployeeClient
+	employeeGateway stores.EmployeeGateway
 }
 
 func NewEmployeeRepository(employeeGateway stores.EmployeeGateway) EmployeeRepository {
@@ -22,8 +20,7 @@ func NewEmployeeRepository(employeeGateway stores.EmployeeGateway) EmployeeRepos
 }
 
 func (e employeeRepository) FindEmployee(ctx context.Context, id int) (*domains.Employee, error) {
-	employee, err := e.employeeGateway.FindEmployeeOnly(ctx, id) //stores version
-	employee, err = e.employeeAPIClient.Fetch(id)                //external api version
+	employee, err := e.employeeGateway.FindEmployeeByID(ctx, id)
 	if err != nil {
 		return nil, err
 	}

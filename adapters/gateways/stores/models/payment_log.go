@@ -1,4 +1,4 @@
-package external_interfaces
+package models
 
 import "database/sql"
 

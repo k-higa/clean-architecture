@@ -1,10 +1,11 @@
 package repository
 
 import (
-	"clean-architecture/adapters/gateways/clients"
+	"clean-architecture/adapters/gateways/api"
+	"clean-architecture/adapters/gateways/api/input"
 	"clean-architecture/adapters/gateways/stores"
+	ei "clean-architecture/adapters/gateways/stores/models"
 	"clean-architecture/domains"
-	ei "clean-architecture/external_interfaces"
 	"clean-architecture/othter"
 	"golang.org/x/net/context"
 )
@@ -18,17 +19,17 @@ type PaymentTransactionRepository interface {
 type paymentTransactionRepository struct {
 	paymentTransactionGateway stores.PaymentTransactionGateway
 	apiKeyGateway             stores.APIKeyGateway
-	amazonPayClient           clients.AmazonPayClient
+	amazonPayAPIGateway       api.AmazonPayAPIGateway
 }
 
 func NewPaymentTransactionRepository(
 	paymentTransactionGateway stores.PaymentTransactionGateway,
 	apiKeyGateway stores.APIKeyGateway,
-	amazonPayClient clients.AmazonPayClient) PaymentTransactionRepository {
+	amazonPayClient api.AmazonPayAPIGateway) PaymentTransactionRepository {
 	return &paymentTransactionRepository{
 		paymentTransactionGateway: paymentTransactionGateway,
 		apiKeyGateway:             apiKeyGateway,
-		amazonPayClient:           amazonPayClient}
+		amazonPayAPIGateway:       amazonPayClient}
 }
 
 func (p paymentTransactionRepository) Entry(ctx context.Context, amount int) (*domains.PaymentTransaction, *othter.PaymentLog, error) {
@@ -36,10 +37,10 @@ func (p paymentTransactionRepository) Entry(ctx context.Context, amount int) (*d
 	if err != nil {
 		return nil, nil, err
 	}
-	req := clients.AmazonPayReq{
+	req := input.AmazonPayReq{
 		Amount: amount,
 	}
-	res, err := p.amazonPayClient.Entry(req, apiKey.KEY.String)
+	res, err := p.amazonPayAPIGateway.Entry(req, apiKey.KEY.String)
 	if err != nil {
 		return nil, nil, err
 	}

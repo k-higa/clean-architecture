@@ -1,15 +1,15 @@
 package stores
 
 import (
+	"clean-architecture/adapters/gateways/stores/models"
 	"clean-architecture/domains"
-	ei "clean-architecture/external_interfaces"
 	"database/sql"
 	"golang.org/x/net/context"
 	"gorm.io/gorm"
 )
 
 type EmployeeGateway interface {
-	FindEmployeeOnly(ctx context.Context, id int) (*domains.Employee, error)
+	FindEmployeeByID(ctx context.Context, id int) (*domains.Employee, error)
 	Create(ctx context.Context, employee domains.Employee) (*domains.Employee, error)
 }
 type employeeGateway struct {
@@ -19,10 +19,10 @@ func NewEmployeeGateway() EmployeeGateway {
 	return &employeeGateway{}
 }
 
-func (e employeeGateway) FindEmployeeOnly(ctx context.Context, id int) (*domains.Employee, error) {
-	var employee = ei.Employee{}
+func (e employeeGateway) FindEmployeeByID(ctx context.Context, id int) (*domains.Employee, error) {
+	var employee = models.Employee{}
 	tx := ctx.Value("TX").(gorm.DB)
-	res := tx.Model(ei.Employee{}).Where("id = ?", id).Find(&employee)
+	res := tx.Model(models.Employee{}).Where("id = ?", id).Find(&employee)
 	if res.Error != nil {
 		return nil, res.Error
 	}
@@ -34,7 +34,7 @@ func (e employeeGateway) FindEmployeeOnly(ctx context.Context, id int) (*domains
 }
 
 func (e employeeGateway) Create(ctx context.Context, employee domains.Employee) (*domains.Employee, error) {
-	model := &ei.Employee{
+	model := &models.Employee{
 		Name: sql.NullString{String: employee.Name, Valid: true},
 		Age:  sql.NullInt32{Int32: int32(employee.Age), Valid: true},
 	}

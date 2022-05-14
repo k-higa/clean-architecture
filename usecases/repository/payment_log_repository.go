@@ -2,7 +2,7 @@ package repository
 
 import (
 	"clean-architecture/adapters/gateways/stores"
-	ei "clean-architecture/external_interfaces"
+	ei "clean-architecture/adapters/gateways/stores/models"
 	"clean-architecture/othter"
 	"database/sql"
 	"golang.org/x/net/context"

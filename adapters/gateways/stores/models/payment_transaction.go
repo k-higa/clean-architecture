@@ -1,4 +1,4 @@
-package external_interfaces
+package models
 
 type PaymentTransaction struct {
 	ID     int `gorm:"primaryKey"`

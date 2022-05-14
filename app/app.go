@@ -1,9 +1,13 @@
-package external_interfaces
+package app
 
-import "gorm.io/gorm"
+import (
+	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
+)
 
 var (
-	DB *gorm.DB
+	DB     *gorm.DB
+	Logger echo.Logger
 )
 
 type DBManager struct {
