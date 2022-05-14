@@ -2,19 +2,19 @@ package repository
 
 import (
 	"clean-architecture/adapters/gateways/clients"
-	"clean-architecture/adapters/gateways/rdb"
+	"clean-architecture/adapters/gateways/stores"
 	"clean-architecture/domains"
 	"clean-architecture/usecases/repository"
 	"golang.org/x/net/context"
 )
 
 type PaymentTransactionRepository struct {
-	apiKeyGateway   rdb.APIKeyGateway
+	apiKeyGateway   stores.APIKeyGateway
 	amazonPayClient clients.AmazonPayClient
 }
 
 func NewPaymentTransactionRepository(
-	apiKeyGateway rdb.APIKeyGateway,
+	apiKeyGateway stores.APIKeyGateway,
 	amazonPayClient clients.AmazonPayClient) repository.PaymentTransactionRepository {
 	return &PaymentTransactionRepository{apiKeyGateway: apiKeyGateway, amazonPayClient: amazonPayClient}
 }

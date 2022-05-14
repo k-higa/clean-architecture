@@ -1,4 +1,4 @@
-package rdb
+package stores
 
 import (
 	ei "clean-architecture/external_interfaces"

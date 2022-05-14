@@ -1,4 +1,4 @@
-package rdb
+package stores
 
 import (
 	"clean-architecture/domains"
