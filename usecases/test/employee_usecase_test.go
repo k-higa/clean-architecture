@@ -1,7 +1,7 @@
 package mock
 
 import (
-	"clean-architecture/adapters/gateways/repository"
+	"clean-architecture/adapters/gateways/stores"
 	"clean-architecture/usecases/test/mock"
 
 	"clean-architecture/usecases"
@@ -15,7 +15,7 @@ func TestOK(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	usecase := usecases.NewEmployeeUseCase(mock.MockRepository{}, repository.NewTransactionManger(nil))
+	usecase := usecases.NewEmployeeUseCase(mock.MockRepository{}, stores.NewTransactionManger(nil))
 	input := input_port.Emoployee{ID: 1}
 	employee, err := usecase.FindEmployee(input)
 
