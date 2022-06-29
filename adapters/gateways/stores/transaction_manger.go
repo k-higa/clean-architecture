@@ -1,6 +1,7 @@
 package stores
 
 import (
+	"clean-architecture/usecases"
 	"golang.org/x/net/context"
 	"gorm.io/gorm"
 )
@@ -13,22 +14,22 @@ func NewTransactionManger(tx *gorm.DB) *TransactionManger {
 	return &TransactionManger{tx: tx}
 }
 
-func (t TransactionManger) Begin(ctx context.Context) any {
+func (t TransactionManger) Begin(ctx usecases.Context) any {
 	return t.tx.Begin()
 }
 
-func (t TransactionManger) Commit(ctx context.Context) error {
+func (t TransactionManger) Commit(ctx usecases.Context) error {
 	return t.tx.Commit().Error
 }
 
-func (t TransactionManger) Rollback(ctx context.Context) (any, error) {
+func (t TransactionManger) Rollback(ctx usecases.Context) (any, error) {
 	return t.tx.Rollback(), nil
 }
-func (t TransactionManger) Tx() context.Context {
+func (t TransactionManger) Tx() usecases.Context {
 	return context.WithValue(context.Background(), "tx", t.tx)
 }
 
-func (t TransactionManger) Transact(f func(ctx context.Context) error) error {
+func (t TransactionManger) Transact(f func(ctx usecases.Context) error) error {
 	tx := t.tx.Begin()
 	defer func() {
 		if r := recover(); r != nil {
