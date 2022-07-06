@@ -2,7 +2,9 @@ package app
 
 import (
 	"github.com/labstack/echo/v4"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"os"
 )
 
 var (
@@ -14,7 +16,8 @@ type DBManager struct {
 }
 
 func (d *DBManager) Open() {
-	db, err := gorm.Open(nil)
+	dbDsn := os.Getenv("DB_DSN")
+	db, err := gorm.Open(mysql.New(mysql.Config{DSN: dbDsn}))
 	if err != nil {
 		panic(err)
 	}

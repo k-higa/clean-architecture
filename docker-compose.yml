@@ -5,6 +5,7 @@ services:
   db:
     container_name: "db"
     image: mysql:8.0
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=db
@@ -12,19 +13,23 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - .db/init/:/docker-entrypoint-initdb.d/
-#          - ./tmp/db:/var/lib/mysql
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "3306:3306"
-
-#  web:
-#    container_name: "db"
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#      target: dev
-#    volumes:
-#      - .:/go/src/app
-#    ports:
-#      - "1326:1326"
-#    depends_on:
-#      - db
+  web:
+    container_name: "db"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    environment:
+      - DB_DNS=my_db_user:${MYSQL_PASSWORD}@tcp(host.docekr.internal:3306)/db?parseTime=True&loc=Local
+    volumes:
+      - .:/go/src/app
+    ports:
+      - "1326:1326"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - db
